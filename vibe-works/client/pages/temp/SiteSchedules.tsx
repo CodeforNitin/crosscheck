@@ -1,73 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Calendar, MapPin, Users, Clock, TrendingUp, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { ThemeToggle } from "@/components/theme-toggle";
-const apiBase = import.meta.env.VITE_API_BASE_URL;
-
-// Live data below 
-
-type Site = {
-  id: string;
-  name: string;
-};
-
-const performanceData = {
-  overallCompletion: 60,
-  supervisorPerformance: [
-    { name: "John Smith", completion: 95, onTime: 80 },
-    { name: "Mike Johnson", completion: 70, onTime: 90 },
-    { name: "David Brown", completion: 15, onTime: 100 },
-    { name: "Lisa Garcia", completion: 60, onTime: 75 }
-  ],
-  plannerDelays: [
-    { name: "Sarah Wilson", avgDelay: 1.5 },
-    { name: "Tom Anderson", avgDelay: 0.8 }
-  ]
-};
 
 export default function SiteSchedules() {
+  const [selectedSite, setSelectedSite] = useState("site1");
 
-  // site location drop down section
-  const [sites, setSites] = useState<Site[]>([]);
-  const [selectedSite, setSelectedSite] = useState("");
-
-  useEffect(() => {
-    fetch(`${apiBase}/api/sites`)
-      .then((res) => res.json())
-      .then((data) => {
-        setSites(data);
-        if (data.length > 0) setSelectedSite(data[0].id); // set default
-      })
-      .catch((err) => console.error("Failed to load sites", err));
-  }, []);
-
-  // project schedule data
-  const [scheduleData, setScheduleData] = useState([]);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/schedules`)
-      .then((res) => res.json())
-      .then((data) => setScheduleData(data))
-      .catch((err) => console.error("Failed to load schedule data", err));
-  }, []);
-  
-  // This is for form data 
-  
   const handleDateCapture = (id: number, type: 'start' | 'end') => {
     const today = new Date().toISOString().split('T')[0];
     console.log(`Capturing ${type} date for activity ${id}: ${today}`);
     // Here you would update the actual data
-  };
-  
-  const formatDate = (dateString: string | null): string => {
-    if (!dateString) return "-";
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // returns YYYY-MM-DD
   };
 
   const getStatusBadge = (item: any) => {
