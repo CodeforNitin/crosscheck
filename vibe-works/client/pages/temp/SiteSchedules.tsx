@@ -1,3 +1,96 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Calendar, MapPin, Users, Clock, TrendingUp, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+// Mock data for demonstration
+const sites = [
+  { id: "site1", name: "Downtown Office Complex" },
+  { id: "site2", name: "Residential Tower A" },
+  { id: "site3", name: "Shopping Mall Renovation" },
+];
+
+const scheduleData = [
+  {
+    id: 1,
+    activity: "Foundation Work",
+    subActivity: "Excavation",
+    location: "Block A",
+    supervisor: "John Smith",
+    planner: "Sarah Wilson",
+    duration: 14,
+    plannedStart: "2024-01-15",
+    plannedEnd: "2024-01-29",
+    predecessor: "-",
+    actualStart: "2024-01-15",
+    actualEnd: "2024-01-31",
+    delayDays: 2
+  },
+  {
+    id: 2,
+    activity: "Foundation Work",
+    subActivity: "Concrete Pouring",
+    location: "Block A",
+    supervisor: "Mike Johnson",
+    planner: "Sarah Wilson",
+    duration: 7,
+    plannedStart: "2024-01-30",
+    plannedEnd: "2024-02-06",
+    predecessor: "Excavation",
+    actualStart: "2024-02-01",
+    actualEnd: null,
+    delayDays: 0
+  },
+  {
+    id: 3,
+    activity: "Structural Work",
+    subActivity: "Column Construction",
+    location: "Block B",
+    supervisor: "David Brown",
+    planner: "Tom Anderson",
+    duration: 21,
+    plannedStart: "2024-02-07",
+    plannedEnd: "2024-02-28",
+    predecessor: "Concrete Pouring",
+    actualStart: null,
+    actualEnd: null,
+    delayDays: 0
+  },
+  {
+    id: 4,
+    activity: "Electrical Work",
+    subActivity: "Wiring Installation",
+    location: "Block A",
+    supervisor: "Lisa Garcia",
+    planner: "Tom Anderson",
+    duration: 10,
+    plannedStart: "2024-02-15",
+    plannedEnd: "2024-02-25",
+    predecessor: "-",
+    actualStart: "2024-02-17",
+    actualEnd: null,
+    delayDays: 2
+  }
+];
+
+const performanceData = {
+  overallCompletion: 35,
+  supervisorPerformance: [
+    { name: "John Smith", completion: 95, onTime: 80 },
+    { name: "Mike Johnson", completion: 70, onTime: 90 },
+    { name: "David Brown", completion: 15, onTime: 100 },
+    { name: "Lisa Garcia", completion: 60, onTime: 75 }
+  ],
+  plannerDelays: [
+    { name: "Sarah Wilson", avgDelay: 1.5 },
+    { name: "Tom Anderson", avgDelay: 0.8 }
+  ]
+};
 
 export default function SiteSchedules() {
   const [selectedSite, setSelectedSite] = useState("site1");

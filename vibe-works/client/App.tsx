@@ -13,27 +13,30 @@ import Purchase from "./pages/Purchase";
 import BillPosting from "./pages/BillPosting";
 import Performance from "./pages/Performance";
 import NotFound from "./pages/NotFound";
+import { UserProvider } from "./context/UserContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <ThemeProvider defaultTheme="dark" storageKey="crosscheck-theme">
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/schedules" element={<SiteSchedules />} />
-            <Route path="/purchase" element={<Purchase />} />
-            <Route path="/bills" element={<BillPosting />} />
-            <Route path="/performance" element={<Performance />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <UserProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/schedules" element={<SiteSchedules />} />
+              <Route path="/purchase" element={<Purchase />} />
+              <Route path="/bills" element={<BillPosting />} />
+              <Route path="/performance" element={<Performance />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </UserProvider>
     </QueryClientProvider>
   </ThemeProvider>
 );
